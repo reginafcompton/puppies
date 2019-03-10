@@ -59,3 +59,13 @@ https://medium.com/xplenty-blog/the-sql-vs-nosql-difference-mysql-vs-mongodb-32c
 Creating a new Mongo database requires little effort. 
 
 `pymongo` comes with a `MongoClient`. Instantiate a client, and specify the name of a database. The database need not exist: by saving data to it, MongoDB automatically creates the specified database.
+
+`pymongo` expects json when inserting to the database. The provided `data.json` file is not proper JSON. Its main oddities include: single strings (rather than double strings), and a trailing semi-colon. It also presents a nested structure with 'canines' containing an array of objects (list of dicts). In short, the basic tools for converting this file to JSON do not work as expected, in that the result is always a string:
+
+```
+json.loads(<data>)
+json.dump(<data>)
+ast.literal_eval(<data>)
+```
+
+It is poor practice to modify the raw data ("data.json"), but I may need to do that, in order to make a little more progress! 

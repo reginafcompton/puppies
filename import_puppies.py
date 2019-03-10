@@ -1,23 +1,20 @@
+import json
+import ast
+
 import pymongo
 from pymongo import MongoClient
-import ssl
 
 client = MongoClient('mongodb://127.0.0.1:27017')
 
-db = client['test_database']
+db = client['puppies']
 
-# db.inventory.insert_many([
-#    # MongoDB adds the _id field with an ObjectId if _id is not present
-#    { "item": "journal", "qty": 25, "status": "A",
-#        "size": { "h": 14, "w": 21, "uom": "cm" }, "tags": [ "blank", "red" ] },
-#    { "item": "notebook", "qty": 50, "status": "A",
-#        "size": { "h": 8.5, "w": 11, "uom": "in" }, "tags": [ "red", "blank" ] },
-#    { "item": "paper", "qty": 100, "status": "D",
-#        "size": { "h": 8.5, "w": 11, "uom": "in" }, "tags": [ "red", "blank", "plain" ] },
-#    { "item": "planner", "qty": 75, "status": "D",
-#        "size": { "h": 22.85, "w": 30, "uom": "cm" }, "tags": [ "blank", "red" ] },
-#    { "item": "postcard", "qty": 45, "status": "A",
-#        "size": { "h": 10, "w": 15.25, "uom": "cm" }, "tags": [ "blue" ] }
-# ])
+with open('data.json', 'r') as f:
+    # read file as a string
+    string = f.read()
 
-cursor = db.inventory.find({})
+    file_data = json.loads(string)
+    result = ast.literal_eval(file_data.replace('\n', '\\n'))
+
+db.inventory.insert(this_data)
+
+client.close()
